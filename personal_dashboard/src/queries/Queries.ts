@@ -12,7 +12,7 @@ export const GET_USER_INFO = gql`
             company {
                 name
                 bs
-                catchPhrase
+                catchphrase
             }
             address {
                 street
@@ -44,6 +44,16 @@ export const GET_USER_POSTS = gql`
         }    
     }
 `;
+// fetch a single post for editing purposes
+export const GET_POST = gql`
+  query($id: ID!) {
+    post(id: $id) {
+      id
+      title
+      body
+    }
+  }
+`
 // Fetch User Albums
 export const GET_USER_ALBUMS = gql`
     query($id: ID!) {
