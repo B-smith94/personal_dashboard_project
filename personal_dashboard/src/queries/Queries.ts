@@ -70,6 +70,7 @@ export const GET_USER_ALBUMS = gql`
                     title
                     photos {
                         id
+                        thumbnailUrl
                         url
                         title
                     }
