@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../queries/Mutations";
 import { getPosts } from "../../hooks/usePosts";
 import { Container, Card, Button, ListGroup } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PostList = () => {
     const { loading, error, data, refetch } = getPosts();
@@ -51,4 +51,6 @@ const PostList = () => {
         </Container>
     )
 }
+
+export default PostList;
 

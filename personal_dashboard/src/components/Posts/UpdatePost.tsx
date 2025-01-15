@@ -6,25 +6,19 @@ import { Form, Button, Container } from 'react-bootstrap'
 import { useRef, FormEvent, useEffect } from "react";
 
 const UpdatePost: React.FC = () => {
-    const inputTitle = useRef<HTMLInputElement>(null);
     const inputBody = useRef<HTMLTextAreaElement>(null);
     const { id } = useParams();
     const [updatePost, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_POST, {
         variables: { id, }
     })
-
     const {data, loading, error } = useQuery(GET_POST, {
         variables: { id }
     }) 
-    
     const navigate = useNavigate();
     
     useEffect(() => {
         if (data && data.post && inputBody.current) {
             inputBody.current.value = data.post.body;
-        }
-        if (data && data.post && inputTitle.current) {
-            inputTitle.current.value = data.post.title;
         }
     }, [data])
 
@@ -34,13 +28,9 @@ const UpdatePost: React.FC = () => {
             updatePost({
                 variables: {
                     id,
-                    input:  {
-                        title: inputTitle.current.value,
-                        body: inputBody.current.value,
-                    },
+                    input:  {body: inputBody.current.value },
                 },
             });
-            inputTitle.current.value = '';
             inputBody.current.value = '';
             console.log('Update successful!')
             navigate('/');
@@ -55,14 +45,6 @@ const UpdatePost: React.FC = () => {
         <Container>
             <Form onSubmit={handleSubmit}>
                 <h1>Update Post</h1>
-                <Form.Group controlId="formTitle">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                     type="text"
-                     placeholder="Enter title"
-                     ref={inputTitle}
-                    />
-                </Form.Group>
                 <Form.Group controlId="formBody">
                     <Form.Label>Body</Form.Label>
                     <Form.Control
