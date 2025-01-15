@@ -2,12 +2,14 @@ import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../queries/Mutations";
 import { getPosts } from "../../hooks/usePosts";
 import { Container, Card, Button, ListGroup } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PostList = () => {
-    const { loading, error, data, refetch } = getPosts();
+    const { id } = useParams();
+    const { loading, error, data, refetch } = getPosts(String(id));
     const [ deletePost ] = useMutation(DELETE_POST);
     const navigate = useNavigate();
+
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
