@@ -33,7 +33,7 @@ const UpdatePost: React.FC = () => {
             });
             inputBody.current.value = '';
             console.log('Update successful!')
-            navigate('/');
+            navigate(`/post-list/${data.post.user.id}`);
         }
     };
 

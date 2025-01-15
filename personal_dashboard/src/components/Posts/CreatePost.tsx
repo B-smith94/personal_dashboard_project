@@ -1,14 +1,16 @@
 import { useMutation } from "@apollo/client";
 import { CREATE_POST } from "../../queries/Mutations";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Form, Button, Container } from 'react-bootstrap'
-import { useRef, FormEvent } from "react";
+import { useRef, FormEvent} from "react";
 
 const CreatePost: React.FC = () => {
     const inputTitle = useRef<HTMLInputElement>(null);
     const inputBody = useRef<HTMLTextAreaElement>(null);
     const [createPost, { loading, error }] = useMutation(CREATE_POST)
     const navigate = useNavigate();
+    const { id } = useParams();
+    
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -25,7 +27,7 @@ const CreatePost: React.FC = () => {
             inputTitle.current.value = '';
             inputBody.current.value = '';
             console.log('Post successfully created!')
-            navigate('/');
+            navigate(`/post-list/${id}`);
         }
     };
 

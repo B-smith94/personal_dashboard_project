@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../queries/Mutations";
 import { getPosts } from "../../hooks/usePosts";
-import { Container, Card, Button, ListGroup } from "react-bootstrap";
+import { Container, Card, Button, ListGroup, Alert } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 const PostList = () => {
@@ -29,13 +29,13 @@ const PostList = () => {
     return (
         <Container>
             <h1>Posts</h1>
-            <Button variant="primary" onClick={() => navigate('/create')}>
+            <Button variant="primary" onClick={() => navigate(`/create-post/${id}`)}>
                 Make a New Post
             </Button>
             {data.user.posts.data.map((post: any) => (
                 <Card key={post.id}>
                     <Card.Header>
-                        <Card.Title>{post.title}</Card.Title>
+                        <Card.Title>Post #{post.id} - {post.title}</Card.Title>
                     </Card.Header>
                     <Card.Body>
                         <Card.Text>{post.body}</Card.Text>
