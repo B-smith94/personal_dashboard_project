@@ -32,6 +32,7 @@ const PostList = () => {
             <Button variant="primary" onClick={() => navigate(`/create-post/${id}`)}>
                 Make a New Post
             </Button>
+            <Button variant="info" onClick={() => navigate(`/user-profile/${id}`)}>View Profile</Button>
             {data.user.posts.data.map((post: any) => (
                 <Card key={post.id}>
                     <Card.Header>

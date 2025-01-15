@@ -4,7 +4,7 @@ import { gql } from "urql";
 export const GET_USER_INFO = gql`
     query ($id: ID!) {
         user(id: $id) {
-            id
+            name
             username
             email
             phone
@@ -12,7 +12,7 @@ export const GET_USER_INFO = gql`
             company {
                 name
                 bs
-                catchphrase
+                catchPhrase
             }
             address {
                 street
