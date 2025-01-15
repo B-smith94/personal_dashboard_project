@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../queries/Mutations";
 import { getPosts } from "../../hooks/usePosts";
-import { Container, Card, Button, ListGroup, Alert } from "react-bootstrap";
+import { Container, Card, Button, ListGroup } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 const PostList = () => {
