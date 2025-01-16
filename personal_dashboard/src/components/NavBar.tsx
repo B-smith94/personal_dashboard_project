@@ -7,7 +7,7 @@ const NavBar: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     return (
         <div>
-            <Navbar bg="light" expand='md' as='header' role="navigation" className="rounded">
+            <Navbar bg="light" expand='lg' as='header' role="navigation" className="rounded">
                 <Navbar.Brand as={NavLink} to={`/user-profile/${id}`}>Personal Dashboard</Navbar.Brand>
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse id="basic-navbar-nav">
