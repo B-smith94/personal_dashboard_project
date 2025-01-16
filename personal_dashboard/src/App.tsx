@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import UserInfo from './components/UserOps/UserInfo'
 import ViewAlbums from './components/Album/ViewAlbums'
+import TodoList from './components/ToDo/TodoList'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
       <Route path='/create-post/:id' element={<CreatePost />} />
       <Route path='/update-post/:id' element={<UpdatePost />} />
       <Route path='/photos/:id' element={<ViewAlbums />} />
+      <Route path='/todos/:id' element={<TodoList />} />
     </Routes>
   )
 }

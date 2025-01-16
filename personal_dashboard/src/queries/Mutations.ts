@@ -34,11 +34,11 @@ export const DELETE_POST = gql`
 `
 // Update Todos
 export const UPDATE_TODOS = gql`
-    mutation UpdateTodos (
+    mutation UpdateTodo (
         $id: ID!,
-        $input: UpdateTodosInput!
+        $input: UpdateTodoInput!
     ) {
-        updateTodos(id: $id, input: $input) {
+        updateTodo(id: $id, input: $input) {
             id
             completed
         }    

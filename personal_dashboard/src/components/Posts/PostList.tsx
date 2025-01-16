@@ -33,6 +33,7 @@ const PostList = () => {
                 Make a New Post
             </Button>
             <Button variant="info" onClick={() => navigate(`/user-profile/${id}`)}>View Profile</Button>
+            <Button variant="secondary" onClick={() => navigate(`/todos/${id}`)}>View Todo List</Button>
             {data.user.posts.data.map((post: any) => (
                 <Card key={post.id}>
                     <Card.Header>
