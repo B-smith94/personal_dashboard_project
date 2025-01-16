@@ -29,7 +29,7 @@ const PostList = () => {
             try {
                 await deletePost({ variables: { id }});
                 refetch();
-                console.log('Deletion successful.')
+                console.log('Post deletion successful.')
             } catch (error) {
                 console.error("Error deleting post:", error)
             }

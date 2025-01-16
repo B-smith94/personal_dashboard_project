@@ -31,7 +31,7 @@ export const DELETE_POST = gql`
     ) {
         deletePost(id: $id)
     }
-`
+`;
 // Update Todos
 export const UPDATE_TODOS = gql`
     mutation UpdateTodo (
@@ -43,4 +43,12 @@ export const UPDATE_TODOS = gql`
             completed
         }    
     }
-`
+`;
+// Delete Todos
+export const DELETE_TODO = gql`
+    mutation DeleteTodo (
+    $id: ID!,
+    ) {
+        deleteTodo(id: $id)
+    }
+`;

@@ -1,7 +1,7 @@
 import { GET_USER_TODOS } from "../../queries/Queries";
-import { UPDATE_TODOS } from "../../queries/Mutations";
+import { UPDATE_TODOS, DELETE_TODO } from "../../queries/Mutations";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, ListGroup, Container, Spinner, Form, Dropdown } from "react-bootstrap";
+import { Button, ListGroup, Container, Spinner, Form, Dropdown, Col, Row } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import NavBar from "../NavBar";
 import { useEffect, useState } from "react";
@@ -18,14 +18,26 @@ const TodoList = () => {
         };
     }, [])
 
-    const { loading, error, data } = useQuery(GET_USER_TODOS, {
+    const { loading, error, data, refetch } = useQuery(GET_USER_TODOS, {
         variables: { id }
     })
 
 
     const [updateTodo, {loading: updateLoading, error: updateError}] = useMutation(UPDATE_TODOS)
 
-    
+    const [deleteTodo] = useMutation(DELETE_TODO)
+
+    const handleDelete = async (id: string) => {
+        if (window.confirm("Are you sure you want to remove this task from the Todo List?")) {
+            try {
+                await deleteTodo({ variables: { id }});
+                refetch();
+                console.log('Todo item deleted.')
+            } catch (error) {
+                console.error("Error deleting post:", error)
+            }
+        }
+    }
 
     const handleCheck = (todoId: string, completed: boolean) => {
         updateTodo({
@@ -85,13 +97,15 @@ const TodoList = () => {
                     <ListGroup.Item key={todo.id}>
                         Todo #{todo.id} - {todo.title}
                         <Form>
-                            <Form.Check
-                             type="checkbox"
-                             label="Mark as Complete"
-                             checked={todo.completed}
-                             onChange={() => handleCheck(todo.id, todo.completed)}
-                             disabled={updateLoading}
-                            />
+                                    <Form.Check
+                                    type="checkbox"
+                                    label="Mark as Complete"
+                                    className="d-flex"
+                                    checked={todo.completed}
+                                    onChange={() => handleCheck(todo.id, todo.completed)}
+                                    disabled={updateLoading}
+                                    />                            
+                                    <Button variant="danger" onClick={() => handleDelete(todo.id)}>Delete Item</Button>
                         </Form>
                         {updateLoading && <Spinner animation="border" size="sm" className="ms-2" />}
                     </ListGroup.Item>
