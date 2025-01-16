@@ -60,25 +60,25 @@ export const GET_POST = gql`
 `
 // Fetch User Albums
 export const GET_USER_ALBUMS = gql`
-    query($id: ID!) {
-        user(id: $id) {
+query {
+  user(id: 1) {
+    id
+    albums {
+      data {
+        title
+        id
+        photos {
+          data {
             id
-            username
-            albums {
-                data {
-                    id
-                    title
-                    photos {
-                        id
-                        thumbnailUrl
-                        url
-                        title
-                    }
-                }
-            }
+            title
+            thumbnailUrl
+            url
+          }
         }
+      }
     }
-`;
+  }
+}`;
 
 // Fetch user Todos
 export const GET_USER_TODOS = gql`

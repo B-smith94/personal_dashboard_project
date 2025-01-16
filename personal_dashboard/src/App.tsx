@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import UserInfo from './components/UserOps/UserInfo'
+import ViewAlbums from './components/Album/ViewAlbums'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Route path='/post-list/:id' element = {<PostList />} />
       <Route path='/create-post/:id' element={<CreatePost />} />
       <Route path='/update-post/:id' element={<UpdatePost />} />
+      <Route path='/photos/:id' element={<ViewAlbums />} />
     </Routes>
   )
 }

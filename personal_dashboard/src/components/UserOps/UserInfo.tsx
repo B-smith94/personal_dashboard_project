@@ -38,6 +38,7 @@ const UserInfo = () => {
                 </Card.Body>
                 <Card.Footer>
                     <Button variant="primary" onClick={() => navigate(`/post-list/${id}`)}>View Posts</Button>
+                    <Button variant="primary" onClick={() => navigate(`/photos/${id}`)}>View Photos</Button>
                 </Card.Footer>
             </Card>
         </Container>
