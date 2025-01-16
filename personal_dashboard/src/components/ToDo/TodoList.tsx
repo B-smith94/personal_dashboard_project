@@ -1,7 +1,7 @@
 import { GET_USER_TODOS } from "../../queries/Queries";
 import { UPDATE_TODOS, DELETE_TODO } from "../../queries/Mutations";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, ListGroup, Container, Spinner, Form, Dropdown, Col, Row } from "react-bootstrap";
+import { Button, ListGroup, Container, Spinner, Form, Dropdown } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import NavBar from "../NavBar";
 import { useEffect, useState } from "react";
