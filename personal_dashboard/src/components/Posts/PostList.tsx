@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../queries/Mutations";
 import { getPosts } from "../../hooks/usePosts";
-import { Container, Card, Button, ListGroup } from "react-bootstrap";
+import { Container, Card, Button, ListGroup, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../NavBar";
 
 const PostList = () => {
@@ -11,16 +11,26 @@ const PostList = () => {
     const { loading, error, data, refetch } = getPosts(String(id));
     const [ deletePost ] = useMutation(DELETE_POST);
     const navigate = useNavigate();
+    const [posts, setPosts] = useState([])
+    const [searchQuery, setSearchQuery] = useState<string>('')
 
     useEffect(():void => {
         if (id === 'undefined') {
             navigate('/');
         };
+        
     }, [])
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
-
+    
+    useEffect(() => {
+        if (data?.user?.posts?.data) {
+            setPosts(data.user.posts.data)
+        }
+    }, [])
+    
+    
     const handleDelete = async (id: string) => {
         if (window.confirm("Are you sure you want to delete this post?")) {
             try {
@@ -32,6 +42,10 @@ const PostList = () => {
             }
         };    
     }
+    
+    const filteredPosts = posts.filter((post: any) => 
+        searchQuery ? post.title.toLowerCase().includes(searchQuery.toLowerCase()) : posts
+    )
 
     return (
         <Container>
@@ -42,7 +56,16 @@ const PostList = () => {
             </Button>
             <Button variant="info" onClick={() => navigate(`/user-profile/${id}`)}>View Profile</Button>
             <Button variant="secondary" onClick={() => navigate(`/todos/${id}`)}>View Todo List</Button>
-            {data.user.posts.data.map((post: any) => (
+            <Form.Group controlId="searchPosts">
+                <Form.Label>Search Posts</Form.Label>
+                <Form.Control
+                 type="text"
+                 placeholder="Search posts by title"
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </Form.Group>
+            {filteredPosts.map((post: any) => (
                 <Card key={post.id}>
                     <Card.Header>
                         <Card.Title>Post #{post.id} - {post.title}</Card.Title>
