@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 
 const TodoList = () => {
     const { id } = useParams();
-    const [todos, setTodos] = useState([])
     const [searchQuery, setSearchQuery] = useState<string>('')
     const [status, setStatus] = useState<string>('all') // 'all', 'complete', 'incomplete'
     const navigate = useNavigate();
@@ -23,12 +22,6 @@ const TodoList = () => {
         variables: { id }
     })
 
-    useEffect((): void => {
-        if (data.user.todos.data) {
-            setTodos(data.user.todos.data)
-        }
-        console.log(todos)
-    }, [])
 
     const [updateTodo, {loading: updateLoading, error: updateError}] = useMutation(UPDATE_TODOS)
 
@@ -43,8 +36,8 @@ const TodoList = () => {
         });
     };
 
-    const filteredTodos = todos.filter((todo: any) => 
-        searchQuery ? todo.title.toLowerCase().includes(searchQuery.toLowerCase()) : todos    
+    const filteredTodos = data?.user?.todos?.data.filter((todo: any) => 
+        searchQuery ? todo.title.toLowerCase().includes(searchQuery.toLowerCase()) : data.user.todos.data    
     ).sort((a: any, b: any) => {
         if (status === 'complete') {
             return a.completed === b.completed ? 0 : a.completed? -1 : 1;

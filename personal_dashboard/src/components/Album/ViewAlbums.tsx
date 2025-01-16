@@ -1,6 +1,6 @@
 import { GET_USER_ALBUMS } from "../../queries/Queries";
 import { useQuery } from "@apollo/client";
-import { Container, Card, Button, Col, Row} from "react-bootstrap";
+import { Container, Card, Button, Col, Row, Form} from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import NavBar from "../NavBar";
@@ -8,6 +8,7 @@ import NavBar from "../NavBar";
 const ViewAlbums = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState<string>('');
 
     useEffect(():void => {
         if (id === 'undefined') {
@@ -30,14 +31,27 @@ const ViewAlbums = () => {
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
 
+    const filteredAlbums = data?.user?.albums?.data.filter((album: any) => 
+        searchQuery ? album.title.toLowerCase().includes(searchQuery.toLowerCase()) : data.user.albums.data
+    )
+
     return (
         <Container>
             <NavBar />
             <h1>Photo Albums</h1>
             <Button className="m-1" onClick={() => navigate(`/user-profile/${id}`)}>View Profile</Button>
             <Button className="m-1" onClick={() => navigate(`/post-list/${id}`)}>View Posts</Button>
+            <Form.Group>
+                <Form.Label>Search Albums by Title</Form.Label>
+                <Form.Control
+                 type="text"
+                 placeholder="Search Albums by Title"
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </Form.Group>
             <Row>
-               {data.user.albums.data.map((album: any) => (
+               {filteredAlbums.map((album: any) => (
                     <Col key={album.id}>
                         <Card style={{ width: '23rem'}}>
                             <Card.Header>

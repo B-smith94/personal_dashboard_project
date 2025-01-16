@@ -11,7 +11,6 @@ const PostList = () => {
     const { loading, error, data, refetch } = getPosts(String(id));
     const [ deletePost ] = useMutation(DELETE_POST);
     const navigate = useNavigate();
-    const [posts, setPosts] = useState([])
     const [searchQuery, setSearchQuery] = useState<string>('')
 
     useEffect(():void => {
@@ -19,17 +18,11 @@ const PostList = () => {
             navigate('/');
         };
         
-    }, [])
+    }, [id, navigate])
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
-    
-    useEffect(() => {
-        if (data?.user?.posts?.data) {
-            setPosts(data.user.posts.data)
-        }
-    }, [])
-    
+
     
     const handleDelete = async (id: string) => {
         if (window.confirm("Are you sure you want to delete this post?")) {
@@ -43,8 +36,8 @@ const PostList = () => {
         };    
     }
     
-    const filteredPosts = posts.filter((post: any) => 
-        searchQuery ? post.title.toLowerCase().includes(searchQuery.toLowerCase()) : posts
+    const filteredPosts = data?.user?.posts?.data.filter((post: any) => 
+        searchQuery ? post.title.toLowerCase().includes(searchQuery.toLowerCase()) : data.user.posts.data
     )
 
     return (
