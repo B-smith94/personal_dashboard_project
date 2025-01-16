@@ -3,10 +3,18 @@ import { UPDATE_TODOS } from "../../queries/Mutations";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, ListGroup, Container, Spinner, Form } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
+import NavBar from "../NavBar";
+import { useEffect } from "react";
 
 const TodoList = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+
+    useEffect(():void => {
+        if (id === 'undefined') {
+            navigate('/');
+        };
+    }, [])
 
     const { loading, error, data } = useQuery(GET_USER_TODOS, {
         variables: { id }
@@ -27,8 +35,11 @@ const TodoList = () => {
     if (error) return <p>Error fetching todos: {error.message}</p>
     if (updateError) return <p>Error updating Todo: {updateError.message}</p>
 
+    
+
     return (
         <Container>
+            <NavBar />
             <h2>User Todo List</h2>
             <Button variant="primary" onClick={() => navigate(`/post-list/${id}`)}>View Posts</Button>
             <Button variant="secondary" onClick={() => navigate(`/photos/${id}`)}>View Photos</Button>

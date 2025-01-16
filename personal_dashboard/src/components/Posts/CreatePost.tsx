@@ -2,7 +2,8 @@ import { useMutation } from "@apollo/client";
 import { CREATE_POST } from "../../queries/Mutations";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Button, Container } from 'react-bootstrap'
-import { useRef, FormEvent} from "react";
+import { useRef, FormEvent, useEffect} from "react";
+import NavBar from "../NavBar";
 
 const CreatePost: React.FC = () => {
     const inputTitle = useRef<HTMLInputElement>(null);
@@ -10,7 +11,12 @@ const CreatePost: React.FC = () => {
     const [createPost, { loading, error }] = useMutation(CREATE_POST)
     const navigate = useNavigate();
     const { id } = useParams();
-    
+
+    useEffect(():void => {
+        if (id === 'undefined') {
+            navigate('/');
+        };
+    }, [])
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -36,6 +42,7 @@ const CreatePost: React.FC = () => {
 
     return (
         <Container>
+            <NavBar />
             <Form onSubmit={handleSubmit}>
                 <h1>Create Post</h1>
                 <Form.Group controlId="formTitle">

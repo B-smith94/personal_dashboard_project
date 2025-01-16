@@ -3,6 +3,8 @@ import { DELETE_POST } from "../../queries/Mutations";
 import { getPosts } from "../../hooks/usePosts";
 import { Container, Card, Button, ListGroup } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import NavBar from "../NavBar";
 
 const PostList = () => {
     const { id } = useParams();
@@ -10,6 +12,11 @@ const PostList = () => {
     const [ deletePost ] = useMutation(DELETE_POST);
     const navigate = useNavigate();
 
+    useEffect(():void => {
+        if (id === 'undefined') {
+            navigate('/');
+        };
+    }, [])
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
@@ -28,6 +35,7 @@ const PostList = () => {
 
     return (
         <Container>
+            <NavBar />
             <h1>Posts</h1>
             <Button variant="primary" onClick={() => navigate(`/create-post/${id}`)}>
                 Make a New Post

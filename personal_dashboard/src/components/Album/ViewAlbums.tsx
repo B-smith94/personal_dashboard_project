@@ -2,11 +2,19 @@ import { GET_USER_ALBUMS } from "../../queries/Queries";
 import { useQuery } from "@apollo/client";
 import { Container, Card, Button, Col, Row} from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import NavBar from "../NavBar";
 
 const ViewAlbums = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+
+    useEffect(():void => {
+        if (id === 'undefined') {
+            navigate('/');
+        };
+    }, [])
+
     const { loading, error, data } = useQuery(GET_USER_ALBUMS, {
         variables: { id }
     })
@@ -24,6 +32,7 @@ const ViewAlbums = () => {
 
     return (
         <Container>
+            <NavBar />
             <h1>Photo Albums</h1>
             <Button className="m-1" onClick={() => navigate(`/user-profile/${id}`)}>View Profile</Button>
             <Button className="m-1" onClick={() => navigate(`/post-list/${id}`)}>View Posts</Button>

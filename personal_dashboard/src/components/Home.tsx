@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { FormEvent, useState } from "react";
+import NavBar from "./NavBar";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Home = () => {
 
     return (
         <div>
+            <NavBar />
             <h1>Welcome to the Personal Dashboard</h1>
             <p>Enter your User ID to access your profile and posts!</p>
             <Form onSubmit={handleSubmit}>

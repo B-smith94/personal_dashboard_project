@@ -2,10 +2,20 @@ import { GET_USER_INFO } from "../../queries/Queries";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Button, Card, ListGroup, Container } from "react-bootstrap";
+import NavBar from "../NavBar";
+import { useEffect } from "react";
 
 const UserInfo = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    
+    useEffect(():void => {
+        if (id === 'undefined') {
+            navigate('/');
+        };
+    }, [])
+
+    
     const { loading, error, data } = useQuery(GET_USER_INFO, {
         variables: { id }
     })
@@ -13,8 +23,11 @@ const UserInfo = () => {
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
 
+    
+
     return (
         <Container>
+            <NavBar />
             <h1>User Profile</h1>
             <Card>
                 <Card.Header>
